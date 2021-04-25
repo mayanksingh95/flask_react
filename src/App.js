@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
-import { Movies } from "./components/Movies";
-import { MovieForm } from "./components/MovieForm";
+import { MovieComponent } from "./components/MovieComponent";
 import { Container } from "semantic-ui-react";
 import { About } from "./components/About";
 import { Login } from "./components/Login";
@@ -14,28 +13,14 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import { useAuth, authFetch } from "./components/Auth"
+import { useAuth } from "./components/Auth"
 
 
 function App() {
-  const [movies, setMovies] = useState([]);
-  const [alert, setalert] = useState({
-    show: false,
-    value: "",
-    color: ""
-  });
+
 
   let [logged] = useAuth();
 
-
-  useEffect(() => {
-    authFetch("/movies").then(response => {
-
-      response.json().then(data => {
-        setMovies(data.movies);
-      })
-    });
-  }, []);
 
 
 
@@ -52,14 +37,8 @@ function App() {
     )} />
 
   }
-  const onDelete = (id) => {
-    setMovies(movies.filter((movie) => movie.id !== id))
-    setalert({ show: true, value: 'Data Deleted!', color: "ui red message" })
-  }
 
-  const showalert = () => {
-    setalert({ show: true, value: 'Data Added!', color: "ui green message" })
-  }
+
 
 
   return (
@@ -71,20 +50,9 @@ function App() {
           <Route exact path="/" render={() => {
             return (
               <Container style={{ marginTop: 40 }}>
-                {alert.show ? (
-                  <div className={alert.color}> { alert.value}</div>
-                ) : null
-                }
+
                 {logged ? (
-                  <>
-                    <MovieForm
-                      onNewMovie={movie =>
-                        setMovies(currentMovies => [movie, ...currentMovies])
-                      }
-                      Alert={showalert}
-                    />
-                    <Movies setalert={setalert} movies={movies} setMovies={setMovies} onDeleteMovie={onDelete} />
-                  </>
+                  <MovieComponent />
                 ) : <h2>You are not logged in!</h2>}
               </Container >
             )

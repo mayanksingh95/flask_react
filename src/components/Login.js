@@ -17,7 +17,7 @@ export const Login = () => {
             'username': username,
             'password': password
         }
-        console.log(opts)
+        //console.log(opts)
         fetch('/api/login', {
             method: 'post',
             body: JSON.stringify(opts)
@@ -25,7 +25,7 @@ export const Login = () => {
             .then(token => {
                 if (token.access_token) {
                     login(token)
-                    console.log(token)
+                    //console.log(token)
                     setUsername("")
                     setPassword("")
 

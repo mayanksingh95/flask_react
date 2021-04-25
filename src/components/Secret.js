@@ -9,7 +9,7 @@ export const Secret = () => {
     useEffect(() => {
         authFetch("/users").then(response =>
             response.json().then(data => {
-                console.log(data.users)
+                //console.log(data.users)
                 setMessage(data.users);
             })
         );
